@@ -22,6 +22,3 @@ OpenAPI: http://localhost:5080/openapi/v1.json
 ฐานข้อมูล `HrManagementDb` ใช้ SQL Server instance `.\SQLEXPRESS`
 SQL migration ใน `backend/HrManagement.Api/Data/Migrations` จะถูกรันอัตโนมัติ
 เมื่อ API เริ่มทำงาน และบันทึกประวัติไว้ในตาราง `schema_migrations`
-
-ชื่อ table, column, constraint, index และ JSON field ใช้รูปแบบ `snake_case`
-ทั้งหมด รูปพนักงานอัปโหลดผ่าน dropzone และเก็บไว้ใน `wwwroot/uploads`
