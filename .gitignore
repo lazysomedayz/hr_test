@@ -1,0 +1,53 @@
+# .NET build output
+**/bin/
+**/obj/
+**/TestResults/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+coverage/
+coverage.*
+
+# Frontend dependencies and build output
+**/node_modules/
+**/dist/
+**/dist-ssr/
+*.tsbuildinfo
+
+# Runtime files
+*.log
+logs/
+tmp/
+output/
+backend/HrManagement.Api/wwwroot/uploads/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+secrets.json
+
+# IDE and operating system files
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Package manager and tooling caches
+.npm/
+.pnpm-store/
+.yarn/
+.cache/
+.eslintcache
+*.local
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.bak
+~$*
