@@ -682,7 +682,14 @@ function Avatar({ employee }: { employee: Employee }) {
       loading="lazy"
     />
   ) : (
-    <span className="avatar initials" aria-hidden="true">
+    <span
+      className="avatar initials"
+      style={{
+        alignContent: "center",
+        textAlign: "center",
+      }}
+      aria-hidden="true"
+    >
       {employee.first_name[0]}
       {employee.last_name[0]}
     </span>

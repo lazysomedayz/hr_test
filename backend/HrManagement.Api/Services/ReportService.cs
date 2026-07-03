@@ -61,7 +61,7 @@ public class ReportService
                 column.Item().Text("รายงานข้อมูลพนักงาน").FontSize(20).Bold().FontColor(Ink);
                 column.Item().Text(filterDescription).FontSize(9).FontColor(Muted);
             });
-            row.AutoItem().AlignBottom().Text("PeopleFlow HR Management").FontSize(9).FontColor(Muted);
+            row.AutoItem().AlignBottom().Text("TAF HR Management").FontSize(9).FontColor(Muted);
         });
     }
 

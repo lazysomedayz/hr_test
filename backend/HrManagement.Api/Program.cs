@@ -24,6 +24,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower;
 });
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options => options.AddPolicy("Frontend", policy =>
     policy.WithOrigins("http://localhost:5173", "http://127.0.0.1:5173")
         .AllowAnyHeader().AllowAnyMethod()));
@@ -34,6 +35,12 @@ await app.Services.GetRequiredService<DatabaseMigrator>().MigrateAsync();
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "HR Management API v1");
+    options.DocumentTitle = "HR Management API";
+});
 app.UseCors("Frontend");
 app.UseStaticFiles();
 app.MapControllers();

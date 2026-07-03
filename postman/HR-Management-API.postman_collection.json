@@ -1,0 +1,205 @@
+{
+  "info": {
+    "_postman_id": "63fb5c91-6a72-47cd-a30b-58bd6c35ad19",
+    "name": "HR Management API",
+    "description": "Postman collection for the HR Management API. Run Create Department and Create Employee first to populate collection IDs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5129", "type": "string" },
+    { "key": "departmentId", "value": "1", "type": "string" },
+    { "key": "employeeId", "value": "1", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/departments" }
+        },
+        {
+          "name": "Get Department Detail",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"id\": {{departmentId}}\n}" },
+            "url": "{{baseUrl}}/api/departments/detail"
+          }
+        },
+        {
+          "name": "Create Department",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "if (pm.response.code === 201) {",
+                "  pm.collectionVariables.set('departmentId', pm.response.json().id);",
+                "}"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"IT\",\n  \"name\": \"Information Technology\",\n  \"address\": \"Bangkok\",\n  \"description\": \"Technology department\",\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/departments"
+          }
+        },
+        {
+          "name": "Update Department",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"IT\",\n  \"name\": \"Information Technology\",\n  \"address\": \"Bangkok\",\n  \"description\": \"Updated technology department\",\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/departments/{{departmentId}}"
+          }
+        },
+        {
+          "name": "Set Department Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"is_active\": true\n}" },
+            "url": "{{baseUrl}}/api/departments/{{departmentId}}/status"
+          }
+        },
+        {
+          "name": "Move Employees to Default Department",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/api/departments/{{departmentId}}/move-employees-to-default"
+          }
+        },
+        {
+          "name": "Delete Department",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/departments/{{departmentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Search Employees",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": 1,\n  \"size\": 10,\n  \"search\": null,\n  \"department_id\": null,\n  \"status\": null,\n  \"sort_by\": \"employee_code\",\n  \"sort_direction\": \"asc\"\n}"
+            },
+            "url": "{{baseUrl}}/api/employees/search"
+          }
+        },
+        {
+          "name": "Get Employee Detail",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"id\": {{employeeId}}\n}" },
+            "url": "{{baseUrl}}/api/employees/detail"
+          }
+        },
+        {
+          "name": "Get Next Employee Code",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/employees/next-code" }
+        },
+        {
+          "name": "Create Employee",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "if (pm.response.code === 201) {",
+                "  pm.collectionVariables.set('employeeId', pm.response.json().id);",
+                "}"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department_id\": {{departmentId}},\n  \"employee_code\": \"EMP001\",\n  \"first_name\": \"Somchai\",\n  \"last_name\": \"Jaidee\",\n  \"email\": \"somchai@example.com\",\n  \"phone\": \"0812345678\",\n  \"gender\": \"Male\",\n  \"date_of_birth\": \"1990-01-15\",\n  \"date_joined\": \"2024-01-02\",\n  \"job_title\": \"Software Developer\",\n  \"address\": \"Bangkok\",\n  \"photo_path\": null,\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/employees"
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department_id\": {{departmentId}},\n  \"employee_code\": \"EMP001\",\n  \"first_name\": \"Somchai\",\n  \"last_name\": \"Jaidee\",\n  \"email\": \"somchai@example.com\",\n  \"phone\": \"0899999999\",\n  \"gender\": \"Male\",\n  \"date_of_birth\": \"1990-01-15\",\n  \"date_joined\": \"2024-01-02\",\n  \"job_title\": \"Senior Software Developer\",\n  \"address\": \"Bangkok\",\n  \"photo_path\": null,\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/employees/{{employeeId}}"
+          }
+        },
+        {
+          "name": "Update Employee Status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"employee_ids\": [{{employeeId}}],\n  \"is_active\": false\n}" },
+            "url": "{{baseUrl}}/api/employees/status"
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/employees/{{employeeId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Uploads",
+      "item": [{
+        "name": "Upload Employee Image",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "formdata",
+            "formdata": [{ "key": "file", "type": "file", "src": [] }]
+          },
+          "url": "{{baseUrl}}/api/uploads/images"
+        }
+      }]
+    },
+    {
+      "name": "Reports",
+      "item": [{
+        "name": "Download Employee PDF Report",
+        "request": {
+          "method": "POST",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"department_id\": null,\n  \"status\": \"active\",\n  \"period\": \"custom\",\n  \"date_from\": \"2024-01-01\",\n  \"date_to\": \"2026-12-31\"\n}"
+          },
+          "url": "{{baseUrl}}/api/reports/employees.pdf"
+        }
+      }]
+    }
+  ]
+}

@@ -1,31 +1,44 @@
-import { useState } from "react"
-import { AlertTriangle } from "lucide-react"
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { AlertTriangle } from "lucide-react";
+import { useState } from "react";
 
 type Props = {
-  open: boolean
-  title: string
-  description: string
-  blockedReason?: string
-  onOpenChange: (open: boolean) => void
-  onConfirm: () => Promise<void>
-}
+  open: boolean;
+  title: string;
+  description: string;
+  blockedReason?: string;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => Promise<void>;
+};
 
-export function DeleteDialog({ open, title, description, blockedReason, onOpenChange, onConfirm }: Props) {
-  const [deleting, setDeleting] = useState(false)
+export function DeleteDialog({
+  open,
+  title,
+  description,
+  blockedReason,
+  onOpenChange,
+  onConfirm,
+}: Props) {
+  const [deleting, setDeleting] = useState(false);
 
   const confirm = async () => {
-    setDeleting(true)
+    setDeleting(true);
     try {
-      await onConfirm()
-      onOpenChange(false)
+      await onConfirm();
+      onOpenChange(false);
     } finally {
-      setDeleting(false)
+      setDeleting(false);
     }
-  }
+  };
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
@@ -37,14 +50,19 @@ export function DeleteDialog({ open, title, description, blockedReason, onOpenCh
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>{description}</AlertDialogDescription>
           {blockedReason && (
-            <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-900">{blockedReason}</p>
+            <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-900">
+              {blockedReason}
+            </p>
           )}
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
           <AlertDialogAction
             disabled={deleting || Boolean(blockedReason)}
-            onClick={(event) => { event.preventDefault(); void confirm() }}
+            onClick={(event) => {
+              event.preventDefault();
+              void confirm();
+            }}
             className="bg-destructive text-white hover:bg-destructive/90"
           >
             {deleting ? "กำลังลบ..." : "ลบถาวร"}
@@ -52,5 +70,5 @@ export function DeleteDialog({ open, title, description, blockedReason, onOpenCh
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

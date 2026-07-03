@@ -1,6 +1,6 @@
 import type { Department, DepartmentInput, Employee, EmployeeInput, EmployeePage } from "./types"
 
-const serverUrl = import.meta.env.VITE_SERVER_URL ?? "http://127.0.0.1:5080"
+const serverUrl = import.meta.env.VITE_SERVER_URL ?? "http://localhost:5129"
 const apiUrl = `${serverUrl}/api`
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
